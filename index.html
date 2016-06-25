@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todomvc">
+<!-- todomvc라는 모듈을 적용하겠다. -->
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<!-- body부터는 TodomvcCtrl의 영향을 받는다. -->
+<body ng-controller="TodomvcCtrl">
+
+    <h1>Hello world!</h1>
+
+    <h2> {{ msg }} </h2>
+
+    <!-- Angular 로딩 -->
+    <script src="node_modules/angular/angular.js"></script>
+
+    <script>
+        angular.module('todomvc', []);
+
+        <!-- 컨트롤러 -->
+        angular.module('todomvc')
+                .controller('TodomvcCtrl', function ($scope) {
+                    $scope.msg = 'Hello World!';
+                });
+    </script>
+</body>
+</html>
