@@ -5,29 +5,54 @@
     <meta charset="UTF-8">
     <title>Angular Class</title>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-    <!-- jQUery -->
-    <script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <!-- body부터는 TodomvcCtrl의 영향을 받는다. -->
 <body ng-controller="TodomvcCtrl" style="padding-left: 20px;">
-    <h1> Todo </h1>
+    <h1> Manage Todo List </h1>
 
-    <ul>
-        <li ng-repeat="todo in todos">
-            <div>
-                <input type="checkbox" ng-model="todo.completed">
-                <input type="text" ng-model="todo.title">
-                <button class="btn btn-xs btn-danger" ng-click="remove(todo)">Remove</button>
-            </div>
+    <!-- Add form -->
+
+    <form ng-submit="add(newTodoTitle)">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Type here..." ng-model="newTodoTitle" autofocus>
+            <span class="input-group-btn">
+                <button class="btn btn-success" type="submit">Add</button>
+            </span>
+        </div>
+    </form>
+
+    <!--<div style="padding-top: 10px; paddding-bottom: 10px;">-->
+        <!--<pre>{{ newTodoTitle | json }}</pre>-->
+    <!--</div>-->
+    <p></p>
+
+    <div style="margin-bottom: 5px;" class="input-group" ng-repeat="todo in todos | filter: statusFilter">
+        <span class="input-group-addon">
+            <input type="checkbox" ng-model="todo.completed">
+        </span>
+        <input class="form-control" type="text" ng-model="todo.title">
+        <span class="input-group-btn">
+            <button class="btn btn-danger" ng-click="remove(todo)">Remove</button>
+        </span>
+    </div>
+
+    <p></p>
+
+    <ul class="list-unstyled">
+        <li>
+            <button type="button" class="btn btn-primary" ng-click="statusFilter={completed: true}">Completed</button>
+            <button type="button" class="btn btn-success" ng-click="statusFilter={completed: false}">Active</button>
+            <button type="button" class="btn btn-info" ng-click="statusFilter={}">All</button>
+            <button type="button" class="btn btn-danger" ng-click="clearCompleted()">Clear Completed</button>
         </li>
     </ul>
+
+    <p></p>
 
     <pre> {{ todos | json }} </pre>
 

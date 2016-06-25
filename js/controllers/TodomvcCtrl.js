@@ -5,9 +5,30 @@
 angular.module('todomvc')
     .controller('TodomvcCtrl', function ($scope) {
 
-        $scope.remove = function (todo) {
-            console.log('remove()');
+        $scope.clearCompleted = function () {
+            var incompletedTodos = $scope.todos.filter(function (t) {
+               if (!t.completed) return t;
+            });
 
+            angular.copy(incompletedTodos, $scope.todos);
+        };
+
+        $scope.add = function (newTodoTitle) {
+            var todos = $scope.todos;
+            var newTodoId = todos.length > 0 ?
+                todos[todos.length - 1].id + 1 : 1;
+
+            var newTodo = {
+                id: newTodoId,
+                title: newTodoTitle,
+                completed: false
+            };
+
+            $scope.todos.push(newTodo);
+            $scope.newTodoTitle = '';
+        };
+        
+        $scope.remove = function (todo) {
             // find index of todo
             var findIdx = $scope.todos.findIndex(function (t) {
                return t.id === todo.id;
